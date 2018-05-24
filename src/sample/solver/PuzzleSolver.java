@@ -40,14 +40,11 @@ public class PuzzleSolver {
         State state = new State(puzzle, null, getScoreFnValue(puzzle));
         stateByPuzzle.put(puzzle, state);
 
-        int counter = 0;
         while (state.getScoreFnValue() > 0) {
             takeALookAround(state.getPuzzle());
             state.visit();
             state = findBestUnvisitedState();
-            counter++;
         }
-        System.out.println(counter);
 
         List<Puzzle> result = new ArrayList<>();
         while (!state.getPuzzle().equals(puzzle)) {
@@ -56,15 +53,6 @@ public class PuzzleSolver {
         }
         result.add(puzzle);
         Collections.reverse(result);
-
-        result.forEach(p -> {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println(p);
-        });
 
         return result;
     }
